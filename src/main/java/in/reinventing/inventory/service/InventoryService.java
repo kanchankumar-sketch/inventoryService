@@ -30,4 +30,8 @@ public class InventoryService {
 	public Inventory getInventoryById(Long id) {
 		return this.inventoryRepository.findById(id).orElse(null);
 	}
+
+	public void deleteById(Long inventoryId) {
+		this.inventoryRepository.deleteById(inventoryId);
+	}
 }

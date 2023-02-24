@@ -1,5 +1,7 @@
 package in.reinventing.inventory.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import in.reinventing.inventory.model.Item;
@@ -21,5 +23,13 @@ public class ItemService {
 
 	public void deleteById(Long itemId) {
 		this.itemRepository.deleteById(itemId);
+	}
+
+	public List<Item> findAll() {
+		return this.itemRepository.findAll();
+	}
+
+	public Item findById(Long itemId) {
+		return this.itemRepository.findById(itemId).orElse(null);
 	}
 }

@@ -1,6 +1,5 @@
 package in.reinventing.inventory.model;
 
-import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,21 +13,32 @@ import javax.persistence.OneToMany;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
-@Data
+import lombok.Setter;
+import lombok.ToString;
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Inventory {
-
+@Builder
+public class Inventory extends AuditModel{
+	private static final long serialVersionUID = 1L;
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String name;
-	private Instant createdAt;
-	private Instant updatedAt;
+	private String address;
+	private String contact;
 	
-	@OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+	@OneToMany(cascade = {CascadeType.MERGE,CascadeType.REMOVE},fetch = FetchType.EAGER,mappedBy = "inventory",orphanRemoval = true)
 	private List<Category> categories=new ArrayList<>();
+
+	@Override
+	public String toString() {
+		return "Inventory [id=" + id + ", name=" + name + ", address=" + address + ", contact=" + contact
+				+ ", categories=" + categories + "]";
+	}
 }
